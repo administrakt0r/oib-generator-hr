@@ -22,7 +22,7 @@ import {
   BarChart3,
 } from "lucide-react"
 import { useToast } from "@/hooks/use-toast"
-import Head from "next/head"
+// Removed Next.js Head import as we're not using Next.js
 
 interface ValidationResult {
   isValid: boolean
@@ -56,7 +56,12 @@ export default function OIBGenerator() {
   const [showCalculation, setShowCalculation] = useState(false)
   const [calculationSteps, setCalculationSteps] = useState<CalculationStep[]>([])
   const [openFAQ, setOpenFAQ] = useState<number | null>(null)
-  const [stats, setStats] = useState({ generated: 0, validated: 0 })
+  interface Stats {
+    generated: number;
+    validated: number;
+  }
+
+  const [stats, setStats] = useState<Stats>({ generated: 0, validated: 0 })
 
   // Load statistics from localStorage on component mount
   useEffect(() => {
@@ -355,7 +360,7 @@ export default function OIBGenerator() {
   }
 
   const updateGeneratedCount = () => {
-    setStats((prev) => ({ ...prev, generated: prev.generated + 1 }))
+    setStats((prev: Stats) => ({ ...prev, generated: prev.generated + 1 }))
   }
 
   const updateValidatedCount = () => {
@@ -372,12 +377,7 @@ export default function OIBGenerator() {
 
   return (
     <>
-      <Head>
-        <title>Hrvatski OIB Generator - Generiraj ili provjeri valjanost Osobnog Identifikacijskog Broja (OIB)</title>
-        <meta
-          name="description"
-          content="Besplatni hrvatski OIB generator i validator. Generiraj valjane OIB brojeve za testiranje aplikacija prema ISO 7064 standardu. Brz, precizan i siguran alat."
-        />
+      {/* Head metadata is moved to index.html or managed by your framework's routing */}
         <meta
           name="keywords"
           content="osobni identifikacijski broj, oib, generiraj oib, provjera oiba, OIB generator, hrvatski OIB, OIB validator, ISO 7064, kontrolna znamenka, testiranje aplikacija, Croatia OIB"
